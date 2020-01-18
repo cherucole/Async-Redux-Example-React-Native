@@ -38,7 +38,7 @@ const PeopleList = props => {
     />
   );
 };
-
+//props validation and how its done -  though not necessary
 PeopleList.propTypes = {
   people: PropTypes.array
 };

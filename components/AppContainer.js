@@ -1,29 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
+import { connect } from "react-redux";
+
 import PeopleList from "../components/PeopleList";
+import { fetchPeople } from "../redux/actions/peopleActions";
 
 const AppContainer = props => {
-  const [people, setPeople] = useState([]);
-  const [errorMessage, seterrorMessage] = useState("");
-  const [isFetching, setIsFetching] = useState(true);
-
-  const fetchRandomPeopleAPI = async () => {
-    try {
-      let response = await fetch("https://randomuser.me/api/?results=15");
-      let json = await response.json();
-      setPeople(json.results);
-      setIsFetching(false);
-    } catch (error) {
-      seterrorMessage(error);
-    }
-  };
-
   useEffect(() => {
-    fetchRandomPeopleAPI();
+    props.fetchPeople();
   }, []);
 
-  let content = <PeopleList people={people} />;
-  if (isFetching) {
+  let content = <PeopleList people={props.randomPeople.people} />;
+  if (props.randomPeople.isFetching) {
     content = <ActivityIndicator size="large" />;
   }
   return <View style={styles.container}>{content}</View>;
@@ -38,4 +26,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AppContainer;
+const mapStateToProps = state => {
+  return {
+    randomPeople: state
+  };
+};
+
+export default connect(mapStateToProps, { fetchPeople })(AppContainer);
