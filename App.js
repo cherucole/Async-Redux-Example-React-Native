@@ -7,9 +7,15 @@ import thunk from "redux-thunk";
 
 import peopleReducer from "./redux/reducers/peopleReducer";
 
+//if we have several reducers this is how we create a store for it. Note now you will
+//use dot notation in component to access them e.g props.randomPeople.peopleList.isFetching to access
+//isFetching property inside people reducer and props.randomPeople.anotherReducerKey.people to access
+//people inside the anotherReducerKey that points to given reducer that has states you interested in
+
 // const rootReducer = combineReducers({
-//   poeple: peopleReducer
+//   peopleList: peopleReducer
 // });
+// const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
