@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 import PeopleList from "../components/PeopleList";
 import { fetchPeople } from "../redux/actions/peopleActions";
@@ -10,8 +10,10 @@ const AppContainer = props => {
     props.fetchPeople();
   }, []);
 
-  let content = <PeopleList people={props.randomPeople.people} />;
-  if (props.randomPeople.isFetching) {
+  const { people, isFetching } = props.randomPeople;
+
+  let content = <PeopleList people={people} />;
+  if (isFetching) {
     content = <ActivityIndicator size="large" />;
   }
   return <View style={styles.container}>{content}</View>;
@@ -31,5 +33,8 @@ const mapStateToProps = state => {
     randomPeople: state
   };
 };
+const mapDispatchToProps = {
+  fetchPeople
+};
 
-export default connect(mapStateToProps, { fetchPeople })(AppContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

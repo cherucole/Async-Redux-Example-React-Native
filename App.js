@@ -17,9 +17,8 @@ import peopleReducer from "./redux/reducers/peopleReducer";
 // });
 // const store = createStore(rootReducer, applyMiddleware(thunk));
 
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
-const store = createStoreWithMiddleware(peopleReducer);
+const store = createStore(peopleReducer, applyMiddleware(thunk));
 
 export default function App() {
   return (

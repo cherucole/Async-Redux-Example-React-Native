@@ -17,6 +17,7 @@ export const fetchingPeopleFailure = error => ({
 });
 
 export const fetchPeople = () => {
+  console.log('Fetching people')
   return async dispatch => {
     dispatch(fetchingPeopleRequest());
     try {
