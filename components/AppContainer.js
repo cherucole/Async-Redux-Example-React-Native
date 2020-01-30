@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  Text,
+  Button
+} from "react-native";
 import { connect, useDispatch, useSelector } from "react-redux";
 
 import PeopleList from "../components/PeopleList";
@@ -10,13 +16,22 @@ const AppContainer = props => {
     props.fetchPeople();
   }, []);
 
-  const { people, isFetching } = props.randomPeople;
+  const { people, isFetching, counter } = props.randomPeople;
+  const dispatch = useDispatch();
 
   let content = <PeopleList people={people} />;
   if (isFetching) {
     content = <ActivityIndicator size="large" />;
   }
-  return <View style={styles.container}>{content}</View>;
+  return (
+    <View style={styles.container}>
+      <View style={{ marginTop: 200 }}>
+        <Text>{counter}</Text>
+        <Button title="add" onPress={() => dispatch({ type: "ADD" })} />
+      </View>
+      <View>{content}</View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
